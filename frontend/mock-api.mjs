@@ -1,5 +1,10 @@
 // Minimal stand-in for the Express backend so the frontend can run without AWS.
 // Serves the same response shapes as backend/controllers/*.js.
+//
+// Sample data, not a live feed. The papers and their arXiv ids are real, but
+// `publishedAt` is synthetic — set to the last couple of weeks so the homepage
+// demonstrates what a recent scrape looks like. The summaries stand in for what
+// Bedrock generates in the deployed pipeline.
 import { createServer } from "node:http";
 
 const PORT = 3001;
@@ -10,7 +15,7 @@ const PAPERS = [
     title: "Segment Anything",
     topics: ["Computer Vision"],
     source: "arXiv",
-    publishedAt: "2023-04-05T00:00:00.000Z",
+    publishedAt: "2026-08-14T09:12:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/2304.02643",
     audioKey: "audio/2304.02643.mp3",
     plainLanguageSummary:
@@ -21,7 +26,7 @@ const PAPERS = [
     title: "High-Resolution Image Synthesis with Latent Diffusion Models",
     topics: ["Computer Vision"],
     source: "arXiv",
-    publishedAt: "2021-12-20T00:00:00.000Z",
+    publishedAt: "2026-08-11T08:30:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/2112.10752",
     audioKey: "audio/2112.10752.mp3",
     plainLanguageSummary:
@@ -33,7 +38,7 @@ const PAPERS = [
       "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
     topics: ["Computer Vision"],
     source: "arXiv",
-    publishedAt: "2020-10-22T00:00:00.000Z",
+    publishedAt: "2026-08-06T13:48:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/2010.11929",
     audioKey: "audio/2010.11929.mp3",
     plainLanguageSummary:
@@ -44,7 +49,7 @@ const PAPERS = [
     title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
     topics: ["NLP"],
     source: "arXiv",
-    publishedAt: "2020-05-22T00:00:00.000Z",
+    publishedAt: "2026-08-13T16:40:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/2005.11401",
     audioKey: "audio/2005.11401.mp3",
     plainLanguageSummary:
@@ -56,7 +61,7 @@ const PAPERS = [
       "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
     topics: ["NLP"],
     source: "arXiv",
-    publishedAt: "2018-10-11T00:00:00.000Z",
+    publishedAt: "2026-08-10T14:22:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/1810.04805",
     audioKey: "audio/1810.04805.mp3",
     plainLanguageSummary:
@@ -67,7 +72,7 @@ const PAPERS = [
     title: "Attention Is All You Need",
     topics: ["NLP"],
     source: "arXiv",
-    publishedAt: "2017-06-12T00:00:00.000Z",
+    publishedAt: "2026-08-05T09:03:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/1706.03762",
     audioKey: "audio/1706.03762.mp3",
     plainLanguageSummary:
@@ -79,7 +84,7 @@ const PAPERS = [
       "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
     topics: ["Reinforcement Learning"],
     source: "arXiv",
-    publishedAt: "2018-01-04T00:00:00.000Z",
+    publishedAt: "2026-08-12T11:05:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/1801.01290",
     audioKey: "audio/1801.01290.mp3",
     plainLanguageSummary:
@@ -90,7 +95,7 @@ const PAPERS = [
     title: "Rainbow: Combining Improvements in Deep Reinforcement Learning",
     topics: ["Reinforcement Learning"],
     source: "arXiv",
-    publishedAt: "2017-10-06T00:00:00.000Z",
+    publishedAt: "2026-08-07T10:15:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/1710.02298",
     audioKey: "audio/1710.02298.mp3",
     plainLanguageSummary:
@@ -101,7 +106,7 @@ const PAPERS = [
     title: "Proximal Policy Optimization Algorithms",
     topics: ["Reinforcement Learning"],
     source: "arXiv",
-    publishedAt: "2017-07-20T00:00:00.000Z",
+    publishedAt: "2026-08-04T15:27:00.000Z",
     pdfUrl: "https://arxiv.org/pdf/1707.06347",
     audioKey: "audio/1707.06347.mp3",
     plainLanguageSummary:
