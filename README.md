@@ -61,12 +61,16 @@ Both SQS queues have dead-letter queues attached, and the email sender reports *
 
 ## Screenshots
 
-<!-- Replace these with real captures next time the stack is up:
-     1. The paper grid with topic filters applied
-     2. A paper detail page showing the AI summary + audio player
-     3. The digest email as it arrives in an inbox  -->
+Captured from the app running locally against the bundled mock API — see
+[Running locally](#running-locally) to reproduce them in two commands.
 
-_Pending — the stack is currently torn down. See [What it does](#what-it-does) for the walkthrough._
+**Homepage** — topic filters, paper cards with the generated summaries, and the subscription panel.
+
+![Homepage showing topic filter chips, paper cards, and the email subscription form](docs/screenshots/landing.png)
+
+**Paper page** — metadata, the plain-language summary, the audio narration player, and the PDF inline.
+
+![Paper detail page with summary, audio player, and embedded PDF reader](docs/screenshots/paper-detail.png)
 
 ## Tech stack
 
@@ -111,19 +115,38 @@ The frontend calls these through Nginx at `/api/*`, which strips the prefix befo
 
 ## Running locally
 
-The app layer runs on Docker Compose. The AI pipeline itself is Lambda-only and needs a real AWS account.
+### Without an AWS account
+
+`frontend/mock-api.mjs` is a dependency-free stand-in for the backend that serves
+the same response shapes from a fixed set of real arXiv papers. It's what the
+screenshots above were taken against.
 
 ```bash
 git clone https://github.com/MK0B3/Cloud-AKH.git
-cd Cloud-AKH
+cd Cloud-AKH/frontend
+npm install
 
-cp backend/.env.example backend/.env   # fill in your AWS region, table names, bucket
+npm run mock       # mock API on :3001
+npm run dev:mock   # Vite on :5173, pointed at the mock
+```
+
+Open <http://localhost:5173>. Browsing, filtering, the paper pages, the audio
+player, and the subscribe form all work; nothing touches AWS.
+
+### Against real AWS resources
+
+```bash
+cp backend/.env.example backend/.env   # region, table names, bucket
 docker compose up --build
 ```
 
-Then open <http://localhost>. The frontend is on port 80, the backend on 3000.
+Then open <http://localhost> — frontend on port 80, backend on 3000. The backend
+reads DynamoDB and S3 directly, so it needs credentials with read access to those
+tables, either exported into the container environment or mounted from `~/.aws`.
+Without them the API starts and `/health` responds, but paper queries fail.
 
-The backend reads DynamoDB and S3 directly, so it needs AWS credentials with read access to those tables — either exported into the container environment or mounted from `~/.aws`. Without them the API starts and `/health` responds, but paper queries fail.
+The AI pipeline itself is Lambda-only and has no local equivalent — it needs a
+deployed stack.
 
 ## Deploying to AWS
 

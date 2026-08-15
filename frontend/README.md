@@ -16,8 +16,24 @@ npm run lint
 ```
 
 API calls go to `/api` by default. Point them elsewhere with
-`VITE_API_BASE_URL=http://localhost:3000` in a `.env` file — useful when
-running the backend directly instead of through Docker Compose.
+`VITE_API_BASE_URL` — useful when running the backend directly instead of
+through Docker Compose.
+
+## Running without AWS
+
+`mock-api.mjs` is a dependency-free stand-in for the Express backend. It serves
+the same response shapes as `backend/controllers/*.js` from a fixed set of real
+arXiv papers, including a generated WAV so the audio player has something to
+play.
+
+```bash
+npm run mock       # mock API on :3001
+npm run dev:mock   # Vite on :5173, reading .env.mock
+```
+
+Everything in the UI works against it — filtering, paper pages, audio, and the
+subscribe form. This is what the screenshots in the root README were taken
+against.
 
 ## Production
 
