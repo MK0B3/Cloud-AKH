@@ -45,10 +45,6 @@ async function request(path, options = {}) {
 }
 
 function getErrorMessage(payload, statusCode) {
-  if (payload?.error === 'Duplicate field value entered') {
-    return 'This email is already subscribed.'
-  }
-
   if (payload?.error) {
     return payload.error
   }
