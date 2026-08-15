@@ -1,0 +1,12 @@
+builds/
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+lambda/*/node_modules/
+AWS_INFRA.tex
+scripts/node_modules/
+*.log
+scraper-out.json
+sub-out.json

@@ -1,0 +1,11 @@
+aws_region = "eu-west-1"
+
+project_name = "aikhub"
+
+ses_sender_email = "muhammad.kobeissi@gmail.com"
+
+bedrock_model_id = "eu.anthropic.claude-3-haiku-20240307-v1:0"
+
+tags = {
+  Project = "AIKnowledgeHub"
+}
