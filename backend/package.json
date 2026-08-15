@@ -1,15 +1,15 @@
 {
-  "name": "backend",
+  "name": "aikhub-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express API for AI Knowledge Hub — serves papers and subscriptions from DynamoDB, presigns audio from S3.",
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["aws", "express", "dynamodb", "s3"],
+  "author": "Mohammad Kobeissi",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.1032.0",

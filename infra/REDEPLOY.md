@@ -30,19 +30,24 @@ The account must have **Bedrock model access** enabled for `anthropic.claude-hai
 ```bash
 aws configure --profile teammate     # enter Access Key + Secret + region eu-west-1
 export AWS_PROFILE=teammate
-aws sts get-caller-identity          # confirm Account == 010396039687
+aws sts get-caller-identity          # note the Account id — you'll reuse it below
 ```
 
-If the account number is wrong, **stop**. You'll deploy into the wrong account.
+Confirm the account id is the one you intend to deploy into. If it isn't,
+**stop** — you'll provision into the wrong account.
+
+```bash
+export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+export REGION=eu-west-1
+```
 
 ---
 
 ## 2. Clone and check out the branch
 
 ```bash
-git clone https://github.com/<your-org>/AIKnowledgeHub.git
-cd AIKnowledgeHub
-git checkout main         # or aws-terraform-setup if working off the branch
+git clone https://github.com/MK0B3/Cloud-AKH.git
+cd Cloud-AKH
 cd infra
 ```
 
@@ -132,7 +137,7 @@ When it finishes, note the outputs (or run `terraform output` again):
 From the repo root (not `infra/`):
 
 ```bash
-ACCOUNT_ID=010396039687
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
 REGION=eu-west-1
 ECR=$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com
 
@@ -325,7 +330,7 @@ terraform init && terraform apply
 
 # 4. Push containers
 cd ..
-ECR=010396039687.dkr.ecr.eu-west-1.amazonaws.com
+ECR=$(aws sts get-caller-identity --query Account --output text).dkr.ecr.eu-west-1.amazonaws.com
 aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin $ECR
 docker build -t aikhub-backend ./backend && docker tag aikhub-backend:latest $ECR/aikhub-backend:latest && docker push $ECR/aikhub-backend:latest
 docker build -t aikhub-frontend ./frontend && docker tag aikhub-frontend:latest $ECR/aikhub-frontend:latest && docker push $ECR/aikhub-frontend:latest

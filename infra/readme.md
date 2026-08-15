@@ -2,7 +2,7 @@
 
 Terraform for the full AIKnowledgeHub stack: a serverless paper-digest pipeline plus a containerised front-end/back-end served over HTTPS.
 
-For a deep technical reference (architecture diagrams, IAM, cost, post-launch incidents), see [`AWS_INFRA.tex`](AWS_INFRA.tex). For known follow-ups, see [`NOTES.md`](NOTES.md).
+For the project overview, see the [root README](../README.md). For a step-by-step rebuild from a clean account, see [`REDEPLOY.md`](REDEPLOY.md). For known follow-ups, see [`NOTES.md`](NOTES.md).
 
 ---
 

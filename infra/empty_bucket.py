@@ -4,8 +4,15 @@
 """
 import boto3
 
-s3 = boto3.client("s3", region_name="eu-west-1")
-bucket = "aikhub-audio-summaries-010396039687"
+REGION = "eu-west-1"
+
+s3 = boto3.client("s3", region_name=REGION)
+
+# The bucket name is account-suffixed by Terraform, so resolve it from the
+# caller's identity rather than hardcoding an account ID.
+account_id = boto3.client("sts", region_name=REGION).get_caller_identity()["Account"]
+bucket = f"aikhub-audio-summaries-{account_id}"
+print(f"Emptying {bucket}")
 paginator = s3.get_paginator("list_object_versions")
 
 for page in paginator.paginate(Bucket=bucket):

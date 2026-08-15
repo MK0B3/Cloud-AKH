@@ -1,16 +1,34 @@
-# React + Vite
+# Frontend — AI Knowledge Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + Vite single-page app. Browse and filter AI papers by topic, read the
+Bedrock-generated summaries, play the Polly narration, and subscribe to the
+weekly digest.
 
-Currently, two official plugins are available:
+See the [root README](../README.md) for the full project and architecture.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Development
 
-## React Compiler
+```bash
+npm install
+npm run dev      # Vite dev server on :5173
+npm run build    # production build to dist/
+npm run lint
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+API calls go to `/api` by default. Point them elsewhere with
+`VITE_API_BASE_URL=http://localhost:3000` in a `.env` file — useful when
+running the backend directly instead of through Docker Compose.
 
-## Expanding the ESLint configuration
+## Production
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The `Dockerfile` builds the app and serves `dist/` with Nginx, which proxies
+`/api/*` to the backend container. `docker-entrypoint.sh` substitutes
+`BACKEND_HOST` into `nginx.conf` at container start, so the same image works
+under Docker Compose (`backend`) and on EC2 (`localhost`).
+
+## Notable details
+
+- **No router library.** `App.jsx` uses a small `useClientRouter` hook over the
+  History API; Nginx serves `index.html` for unknown paths so deep links work.
+- **`useDeferredValue` on topic filters** keeps the grid responsive while a
+  refetch is in flight.
